@@ -13,10 +13,10 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "@devvit/public-api": "0.10.3"
+    "@devvit/public-api": "0.10.4"
   },
   "devDependencies": {
-    "@devvit/tsconfig": "0.10.3",
+    "@devvit/tsconfig": "0.10.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.48.0",
