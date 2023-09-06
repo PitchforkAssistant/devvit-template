@@ -16,9 +16,3 @@ export function toNumberOrDefault (input: unknown, defaultValue: number): number
         return defaultValue;
     }
 }
-
-export function logError (note: string, error: unknown): void {
-    console.error(note);
-    console.error(error);
-}
-

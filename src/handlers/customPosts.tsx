@@ -1,5 +1,4 @@
 import {Devvit, CustomPostType, FormOnSubmitEvent, Context} from "@devvit/public-api";
-import {logError} from "../helpers/miscHelpers.js";
 import {DEFAULTS, ERRORS} from "../constants.js";
 // eslint-disable no-extra-parens
 export async function customPostFormSubmitted (event: FormOnSubmitEvent, context: Context) {
@@ -28,7 +27,7 @@ export async function customPostFormSubmitted (event: FormOnSubmitEvent, context
             appearance: "success",
         });
     } catch (e) {
-        logError("Error attempting to create custom post", e);
+        console.error("Error attempting to create custom post", e);
         context.ui.showToast(ERRORS.CUSTOM_POST_FAILED);
     }
 }

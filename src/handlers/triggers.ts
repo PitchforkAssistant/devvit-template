@@ -4,7 +4,6 @@ import {
     CommentSubmit, CommentCreate, CommentUpdate, CommentDelete, CommentReport,
 } from "@devvit/protos";
 import {TriggerContext, OnTriggerEvent, TriggerEventType, TriggerEvent} from "@devvit/public-api";
-import {logError} from "../helpers/miscHelpers.js";
 
 // Post Triggers
 
@@ -91,7 +90,7 @@ export async function onAppChanged (event: OnTriggerEvent<AppInstall | AppUpgrad
         const newJob = await context.scheduler.runJob({cron: "*/5 * * * *", name: "someRecurringTask", data: {}});
         console.log(`New someRecurringTask job scheduled ${newJob}`);
     } catch (e) {
-        logError("Failed to schedule someRecurringTask job", e);
+        console.error("Failed to schedule someRecurringTask job", e);
         throw e;
     }
 }

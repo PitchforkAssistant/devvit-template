@@ -1,10 +1,9 @@
 import {ModActionType, RedditAPIClient} from "@devvit/public-api";
-import {logError} from "./miscHelpers.js";
 import {getTimeDeltaInSeconds} from "./dateHelpers.js";
 
 export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds?: number, includeParent?: boolean, moderatorNames?: string[]): Promise<boolean> {
     const modLog = await reddit.getModerationLog({subredditName, moderatorUsernames: moderatorNames, type: actionType, limit: 100, pageSize: 100}).all().catch(e => {
-        logError(`Failed to fetch ${actionType} log for ${subredditName} by ${moderatorNames?.join(",") ?? ""}`, e);
+        console.error(`Failed to fetch ${actionType} log for ${subredditName} by ${moderatorNames?.join(",") ?? ""}`, e);
         return [];
     });
     for (const modAction of modLog) {
