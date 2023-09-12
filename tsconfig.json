@@ -2,7 +2,6 @@
     "extends": "@devvit/tsconfig/devvit.tsconfig.json",
     "compilerOptions": {
         "resolveJsonModule": true,
-        "module": "nodenext",
         "jsx": "react"
     }
 }
