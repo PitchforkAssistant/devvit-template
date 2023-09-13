@@ -1,38 +1,16 @@
-import {Devvit, CustomPostType, FormOnSubmitEvent, Context} from "@devvit/public-api";
-import {DEFAULTS, ERRORS} from "../constants.js";
-// eslint-disable no-extra-parens
-export async function customPostFormSubmitted (event: FormOnSubmitEvent, context: Context) {
-    const subredditName = (await context.reddit.getCurrentSubreddit()).name;
+import {Devvit, CustomPostType} from "@devvit/public-api";
 
-    let title = DEFAULTS.CUSTOM_POST_TITLE;
-    if (event.values.title) {
-        title = String(event.values.title);
-    }
+export const customPostPreview = (
+    <blocks height="tall" >
+        <vstack padding="large" gap="large" alignment="middle center" grow={true}>
+            <text style="body" size="large" alignment="middle center" grow={true}>
+        Loading custom post example...
+            </text>
+        </vstack>
+    </blocks>
+);
 
-    try {
-        await context.reddit.submitPost({
-            title,
-            subredditName,
-            preview:
-            <blocks height="tall" >
-                <vstack padding="large" gap="large" alignment="middle center" grow={true}>
-                    <text style="body" size="large" alignment="middle center" grow={true}>
-                        Loading custom post example...
-                    </text>
-                </vstack>
-            </blocks>,
-        });
-        context.ui.showToast({
-            text: "Custom post created!",
-            appearance: "success",
-        });
-    } catch (e) {
-        console.error("Error attempting to create custom post", e);
-        context.ui.showToast(ERRORS.CUSTOM_POST_FAILED);
-    }
-}
-
-export const customPost: CustomPostType = {
+export const customPostType: CustomPostType = {
     name: "Custom Post Example",
     render: context => {
         const [currentUsername] = context.useState(async () => {

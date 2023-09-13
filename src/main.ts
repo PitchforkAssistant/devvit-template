@@ -4,7 +4,7 @@ import {validateDiceRoll} from "./handlers/validators.js";
 import {DEFAULTS, HELP_TEXTS, LABELS, OPTIONS} from "./constants.js";
 import {formActionPressed, formOnSubmit, menuActionPressed, menuLoggedOutPressed, menuMemberPressed, menuModActionPressed} from "./handlers/menus.js";
 import {onAppChanged, onCommentCreate, onCommentDelete, onCommentReport, onCommentSubmit, onCommentUpdate, onModAction, onModMail, onPostCreate, onPostDelete, onPostFlairUpdate, onPostReport, onPostSubmit, onPostUpdate} from "./handlers/triggers.js";
-import {customPost} from "./handlers/customPosts.js";
+import {customPostType} from "./components/customPostType.js";
 
 // Enable any Devvit features you might need.
 Devvit.configure({
@@ -15,7 +15,7 @@ Devvit.configure({
 });
 
 // Custom post stuff
-Devvit.addCustomPostType(customPost);
+Devvit.addCustomPostType(customPostType);
 Devvit.addMenuItem({
     location: "subreddit",
     label: LABELS.CUSTOM_POST_BUTTON,

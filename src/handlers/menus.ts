@@ -1,7 +1,8 @@
 import {MenuItemOnPressEvent, MenuItemUserType, FormOnSubmitEvent} from "@devvit/public-api";
 import {Context} from "@devvit/public-api";
+import {customPostPreview} from "../components/customPostType.js";
 import {submitPostFormKey} from "../main.js";
-import {customPostFormSubmitted} from "./customPosts.js";
+import {DEFAULTS, ERRORS} from "../constants.js";
 
 export async function formActionPressed (event: MenuItemOnPressEvent, context: Context) {
     context.ui.showForm(submitPostFormKey);
@@ -12,8 +13,28 @@ export async function formOnSubmit (event: FormOnSubmitEvent, context: Context) 
     console.log(message);
     context.ui.showToast(message);
 
-    // Otherwise we'd perform the rest of the logic here, but we are using this to submit a custom post and that needs tsx.
-    return customPostFormSubmitted(event, context);
+    // The logic for creating a custom post.
+    const subredditName = (await context.reddit.getCurrentSubreddit()).name;
+
+    let title = DEFAULTS.CUSTOM_POST_TITLE;
+    if (event.values.title) {
+        title = String(event.values.title);
+    }
+
+    try {
+        await context.reddit.submitPost({
+            title,
+            subredditName,
+            preview: customPostPreview,
+        });
+        context.ui.showToast({
+            text: "Custom post created!",
+            appearance: "success",
+        });
+    } catch (e) {
+        console.error("Error attempting to create custom post", e);
+        context.ui.showToast(ERRORS.CUSTOM_POST_FAILED);
+    }
 }
 
 // MenuItemOnPressEvent doesn't have a userType property, so we have to pass it in separately based on the menu item.
