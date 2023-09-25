@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@devvit/public-api": "0.10.4",
-    "devvit-helpers": "^0.2.10"
+    "devvit-helpers": "0.2.19"
   },
   "devDependencies": {
     "@devvit/tsconfig": "0.10.4",
