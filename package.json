@@ -16,7 +16,7 @@
     "@devvit/protos": "0.10.13",
     "@devvit/public-api": "0.10.13",
     "@devvit/shared-types": "0.10.13",
-    "devvit-helpers": "0.2.32"
+    "devvit-helpers": "0.2.33"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",
