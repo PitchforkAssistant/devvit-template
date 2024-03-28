@@ -22,17 +22,18 @@ export async function formOnSubmit (event: FormOnSubmitEvent, context: Context) 
     }
 
     try {
-        await context.reddit.submitPost({
+        const newPost = await context.reddit.submitPost({
             title,
             subredditName,
             preview: customPostPreview,
         });
         context.ui.showToast({
-            text: "Custom post created!",
+            text: "Custom post created, redirecting...",
             appearance: "success",
         });
+        context.ui.navigateTo(newPost);
     } catch (e) {
-        console.error("Error attempting to create custom post", e);
+        console.error("Error creating custom post", e);
         context.ui.showToast(ERRORS.CUSTOM_POST_FAILED);
     }
 }
