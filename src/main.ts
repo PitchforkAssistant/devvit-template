@@ -1,8 +1,10 @@
 import {Devvit} from "@devvit/public-api";
-import {someRecurringTask} from "./handlers/jobs.js";
+import {someRecurringTask} from "./handlers/scheduler.js";
 import {validateDiceRoll} from "./handlers/validators.js";
 import {DEFAULTS, HELP_TEXTS, LABELS, OPTIONS} from "./constants.js";
-import {formActionPressed, formOnSubmit, menuActionPressed, menuLoggedOutPressed, menuMemberPressed, menuModActionPressed} from "./handlers/menus.js";
+import {formOnSubmit} from "./handlers/formSubmit.js";
+import {formActionPressed, loggedOutMenuItemPressed, memberMenuItemPressed, modMenuItemPressed} from "./handlers/menuPress.js";
+import {generalMenuItemPressed} from "./handlers/menuPress.js";
 import {onAppChanged, onCommentCreate, onCommentDelete, onCommentReport, onCommentSubmit, onCommentUpdate, onModAction, onModMail, onPostCreate, onPostDelete, onPostFlairUpdate, onPostReport, onPostSubmit, onPostUpdate} from "./handlers/triggers.js";
 import {CustomPostExample} from "./customPost/index.js";
 
@@ -22,6 +24,7 @@ Devvit.addMenuItem({
     description: HELP_TEXTS.CUSTOM_POST_BUTTON,
     onPress: formActionPressed,
 });
+
 export const submitPostFormKey = Devvit.createForm(
     {
         fields: [
@@ -99,25 +102,25 @@ Devvit.addMenuItem({
     location: "post",
     label: LABELS.GENERAL_POST_ACTION,
     description: HELP_TEXTS.GENERAL_POST_ACTION,
-    onPress: menuActionPressed,
+    onPress: generalMenuItemPressed,
 });
 Devvit.addMenuItem({
     location: ["subreddit", "post", "comment"],
     label: LABELS.LOGGED_OUT_ACTION,
     forUserType: "loggedOut",
-    onPress: menuLoggedOutPressed,
+    onPress: loggedOutMenuItemPressed,
 });
 Devvit.addMenuItem({
     location: ["subreddit", "post", "comment"],
     label: LABELS.MOD_ACTION,
     forUserType: "moderator",
-    onPress: menuModActionPressed,
+    onPress: modMenuItemPressed,
 });
 Devvit.addMenuItem({
     location: ["subreddit", "post", "comment"],
     label: LABELS.MEMBER_ACTION,
     forUserType: "member",
-    onPress: menuMemberPressed,
+    onPress: memberMenuItemPressed,
 });
 
 // Define scheduler jobs
