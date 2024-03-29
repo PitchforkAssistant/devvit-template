@@ -4,18 +4,18 @@ import {validateDiceRoll} from "./handlers/validators.js";
 import {DEFAULTS, HELP_TEXTS, LABELS, OPTIONS} from "./constants.js";
 import {formActionPressed, formOnSubmit, menuActionPressed, menuLoggedOutPressed, menuMemberPressed, menuModActionPressed} from "./handlers/menus.js";
 import {onAppChanged, onCommentCreate, onCommentDelete, onCommentReport, onCommentSubmit, onCommentUpdate, onModAction, onModMail, onPostCreate, onPostDelete, onPostFlairUpdate, onPostReport, onPostSubmit, onPostUpdate} from "./handlers/triggers.js";
-import {customPostType} from "./components/customPostType.js";
+import {CustomPostExample} from "./customPost/index.js";
 
 // Enable any Devvit features you might need.
 Devvit.configure({
     redditAPI: true,
-    kvStore: true,
+    redis: true,
     media: false,
     http: false,
 });
 
 // Custom post stuff
-Devvit.addCustomPostType(customPostType);
+Devvit.addCustomPostType(CustomPostExample);
 Devvit.addMenuItem({
     location: "subreddit",
     label: LABELS.CUSTOM_POST_BUTTON,

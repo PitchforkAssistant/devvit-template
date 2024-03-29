@@ -1,8 +1,8 @@
 import {MenuItemOnPressEvent, MenuItemUserType, FormOnSubmitEvent} from "@devvit/public-api";
 import {Context} from "@devvit/public-api";
-import {customPostPreview} from "../components/customPostType.js";
 import {submitPostFormKey} from "../main.js";
 import {DEFAULTS, ERRORS} from "../constants.js";
+import {CustomPostPreview} from "../customPost/components/preview.js";
 
 export async function formActionPressed (event: MenuItemOnPressEvent, context: Context) {
     context.ui.showForm(submitPostFormKey);
@@ -25,7 +25,7 @@ export async function formOnSubmit (event: FormOnSubmitEvent, context: Context) 
         const newPost = await context.reddit.submitPost({
             title,
             subredditName,
-            preview: customPostPreview,
+            preview: CustomPostPreview,
         });
         context.ui.showToast({
             text: "Custom post created, redirecting...",
