@@ -1,9 +1,24 @@
-import {FormOnSubmitEvent} from "@devvit/public-api";
-import {Context} from "@devvit/public-api";
-import {DEFAULTS, ERRORS} from "../constants.js";
+import {Context, Devvit, Form, FormKey, FormOnSubmitEvent, FormOnSubmitEventHandler} from "@devvit/public-api";
+import {DEFAULTS, ERRORS, HELP_TEXTS, LABELS} from "../constants.js";
 import {CustomPostPreview} from "../customPost/components/preview.js";
 
-export async function formOnSubmit (event: FormOnSubmitEvent, context: Context) {
+// If you want to dynamically generate the form, use this:
+// const form: FormFunction = (data: Data) => // return form generated from data;
+const form: Form = {
+    fields: [
+        {
+            type: "string",
+            name: "title",
+            label: LABELS.CUSTOM_POST_TITLE,
+            helpText: HELP_TEXTS.CUSTOM_POST_TITLE,
+        },
+    ],
+    title: LABELS.FORM,
+    acceptLabel: LABELS.FORM_ACCEPT,
+    cancelLabel: LABELS.FORM_CANCEL,
+};
+
+const formHandler: FormOnSubmitEventHandler = async (event: FormOnSubmitEvent, context: Context) => {
     const message = `You submitted the form with values ${JSON.stringify(event.values)}`;
     console.log(message);
     context.ui.showToast(message);
@@ -31,5 +46,6 @@ export async function formOnSubmit (event: FormOnSubmitEvent, context: Context) 
         console.error("Error creating custom post", e);
         context.ui.showToast(ERRORS.CUSTOM_POST_FAILED);
     }
-}
+};
 
+export const createPostForm: FormKey = Devvit.createForm(form, formHandler);

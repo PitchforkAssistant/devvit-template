@@ -2,11 +2,14 @@ import {Devvit} from "@devvit/public-api";
 import {someRecurringTask} from "./handlers/scheduler.js";
 import {validateDiceRoll} from "./handlers/validators.js";
 import {DEFAULTS, HELP_TEXTS, LABELS, OPTIONS} from "./constants.js";
-import {formOnSubmit} from "./handlers/formSubmit.js";
-import {formActionPressed, loggedOutMenuItemPressed, memberMenuItemPressed, modMenuItemPressed} from "./handlers/menuPress.js";
+import {loggedOutMenuItemPressed, memberMenuItemPressed, modMenuItemPressed} from "./handlers/menuPress.js";
 import {generalMenuItemPressed} from "./handlers/menuPress.js";
 import {onAppChanged, onCommentCreate, onCommentDelete, onCommentReport, onCommentSubmit, onCommentUpdate, onModAction, onModMail, onPostCreate, onPostDelete, onPostFlairUpdate, onPostReport, onPostSubmit, onPostUpdate} from "./handlers/triggers.js";
 import {CustomPostExample} from "./customPost/index.js";
+
+// These are exports of Devvit.add... functions contained in other files, which helps with organization.
+// It's effectively the same as if you had written the code here.
+export {createPostForm} from "./forms/createPostForm.js";
 
 // Enable any Devvit features you might need.
 Devvit.configure({
@@ -18,29 +21,6 @@ Devvit.configure({
 
 // Custom post stuff
 Devvit.addCustomPostType(CustomPostExample);
-Devvit.addMenuItem({
-    location: "subreddit",
-    label: LABELS.CUSTOM_POST_BUTTON,
-    description: HELP_TEXTS.CUSTOM_POST_BUTTON,
-    onPress: formActionPressed,
-});
-
-export const submitPostFormKey = Devvit.createForm(
-    {
-        fields: [
-            {
-                type: "string",
-                name: "title",
-                label: LABELS.CUSTOM_POST_TITLE,
-                helpText: HELP_TEXTS.CUSTOM_POST_TITLE,
-            },
-        ],
-        title: LABELS.FORM,
-        acceptLabel: LABELS.FORM_ACCEPT,
-        cancelLabel: LABELS.FORM_CANCEL,
-    },
-    formOnSubmit
-);
 
 // Set up the configuration field presented to the user for each installation (subreddit) of the app.
 Devvit.addSettings([
