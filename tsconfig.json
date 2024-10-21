@@ -5,5 +5,6 @@
         "jsx": "react",
         "module": "NodeNext",
         "moduleResolution": "NodeNext"
-    }
+    },
+    "exclude": ["**/node_modules", "dist", "**/.*/", "eslint.config.mjs"]
 }
