@@ -1,6 +1,6 @@
 import {MenuItemOnPressEvent, MenuItemUserType} from "@devvit/public-api";
 import {Context} from "@devvit/public-api";
-import {submitPostFormKey} from "../main.js";
+import {createPostForm} from "../main.js";
 
 export async function generalMenuItemPressed (event: MenuItemOnPressEvent, context: Context) {
     return exampleMenuItemPressed(event, context);
@@ -21,6 +21,6 @@ export async function exampleMenuItemPressed (event: MenuItemOnPressEvent, conte
     console.log(message);
     context.ui.showToast(message);
 } export async function formActionPressed (event: MenuItemOnPressEvent, context: Context) {
-    context.ui.showForm(submitPostFormKey);
+    context.ui.showForm(createPostForm);
 }
 

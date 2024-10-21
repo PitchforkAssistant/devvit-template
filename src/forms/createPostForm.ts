@@ -18,7 +18,11 @@ const form: Form = {
     cancelLabel: LABELS.FORM_CANCEL,
 };
 
-const formHandler: FormOnSubmitEventHandler = async (event: FormOnSubmitEvent, context: Context) => {
+export type CreatePostFormSubmitData = {
+    title?: string;
+}
+
+const formHandler: FormOnSubmitEventHandler<CreatePostFormSubmitData> = async (event: FormOnSubmitEvent<CreatePostFormSubmitData>, context: Context) => {
     const message = `You submitted the form with values ${JSON.stringify(event.values)}`;
     console.log(message);
     context.ui.showToast(message);

@@ -34,8 +34,8 @@ export class CustomPostState {
         this._currentUserData = context.useState<UserData>(async () => {
             const currentUser = await context.reddit.getCurrentUser();
             return {
-                username: currentUser.username,
-                id: currentUser.id,
+                username: currentUser?.username ?? "unknown",
+                id: currentUser?.id ?? "",
             };
         });
 

@@ -1,7 +1,6 @@
 import {Devvit} from "@devvit/public-api";
 import {CustomPostState} from "../state.js";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ButtonsPage = (state: CustomPostState) => {
     async function clickCounter () {
         const success = await state.incrementCounter();
@@ -17,7 +16,7 @@ export const ButtonsPage = (state: CustomPostState) => {
                 <text style="heading" size="xxlarge">
                     Hello, {state.username ?? "stranger"}!
                 </text>
-                <fullsnoo size="medium" userId={state.userId ?? "t2_1qwk"} facing="left"/>
+                <avatar size="large" thingId={state.userId ?? "t2_1qwk"} facing="left"/>
             </hstack>
 
             <vstack gap="medium">
