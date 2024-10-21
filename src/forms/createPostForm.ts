@@ -18,7 +18,11 @@ const form: Form = {
     cancelLabel: LABELS.FORM_CANCEL,
 };
 
-const formHandler: FormOnSubmitEventHandler = async (event: FormOnSubmitEvent, context: Context) => {
+export type CreatePostFormSubmitData = {
+    title?: string;
+}
+
+const formHandler: FormOnSubmitEventHandler<CreatePostFormSubmitData> = async (event: FormOnSubmitEvent<CreatePostFormSubmitData>, context: Context) => {
     const message = `You submitted the form with values ${JSON.stringify(event.values)}`;
     console.log(message);
     context.ui.showToast(message);
@@ -26,9 +30,10 @@ const formHandler: FormOnSubmitEventHandler = async (event: FormOnSubmitEvent, c
     // The logic for creating a custom post.
     const subredditName = (await context.reddit.getCurrentSubreddit()).name;
 
-    let title = DEFAULTS.CUSTOM_POST_TITLE;
-    if (event.values.title) {
-        title = String(event.values.title);
+    const title = DEFAULTS.CUSTOM_POST_TITLE;
+    if (!event.values.title) {
+        context.ui.showToast(ERRORS.CUSTOM_POST_TITLE_MISSING);
+        return;
     }
 
     try {
@@ -36,6 +41,7 @@ const formHandler: FormOnSubmitEventHandler = async (event: FormOnSubmitEvent, c
             title,
             subredditName,
             preview: CustomPostPreview,
+            textFallback: {text: "The platform you're using doesn't support custom posts. Please use Shreddit or an up to date app to view this post."},
         });
         context.ui.showToast({
             text: "Custom post created, redirecting...",

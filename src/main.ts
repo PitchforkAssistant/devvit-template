@@ -1,173 +1,52 @@
 import {Devvit} from "@devvit/public-api";
-import {someRecurringTask} from "./handlers/scheduler.js";
-import {validateDiceRoll} from "./handlers/validators.js";
-import {DEFAULTS, HELP_TEXTS, LABELS, OPTIONS} from "./constants.js";
-import {loggedOutMenuItemPressed, memberMenuItemPressed, modMenuItemPressed} from "./handlers/menuPress.js";
-import {generalMenuItemPressed} from "./handlers/menuPress.js";
-import {onAppChanged, onCommentCreate, onCommentDelete, onCommentReport, onCommentSubmit, onCommentUpdate, onModAction, onModMail, onPostCreate, onPostDelete, onPostFlairUpdate, onPostReport, onPostSubmit, onPostUpdate} from "./handlers/triggers.js";
-import {CustomPostExample} from "./customPost/index.js";
 
-// These are exports of Devvit.add... functions contained in other files, which helps with organization.
-// It's effectively the same as if you had written the code here.
-export {createPostForm} from "./forms/createPostForm.js";
-
-// Enable any Devvit features you might need.
+// Enable any Devvit features you might need. For example purposes, we'll enable all non-privileged plugins.
 Devvit.configure({
     redditAPI: true,
     redis: true,
-    media: false,
-    http: false,
+    media: true,
+    http: true,
+    kvStore: true,
+    realtime: true,
 });
 
-// Custom post stuff
-Devvit.addCustomPostType(CustomPostExample);
+// These are exports of Devvit.add... functions contained in other files, which helps with organization.
+// It's effectively the same as if you had written the code here.
 
-// Set up the configuration field presented to the user for each installation (subreddit) of the app.
-Devvit.addSettings([
-    {
-        type: "number",
-        name: "diceRoll",
-        label: LABELS.DICE_ROLL,
-        helpText: HELP_TEXTS.DICE_ROLL,
-        defaultValue: DEFAULTS.DICE_ROLL,
-        onValidate: validateDiceRoll,
-    },
-    {
-        type: "boolean",
-        name: "toggle",
-        label: LABELS.TOGGLE,
-        helpText: HELP_TEXTS.TOGGLE,
-        defaultValue: DEFAULTS.TOGGLE,
-    },
-    {
-        type: "select",
-        name: "dropdownSelect",
-        label: LABELS.DROPDOWN_SELECT,
-        helpText: HELP_TEXTS.DROPDOWN_SELECT,
-        defaultValue: DEFAULTS.SELECT,
-        options: OPTIONS.SELECT,
-    },
-    {
-        type: "select",
-        name: "multiSelect",
-        label: LABELS.MULTI_SELECT,
-        helpText: HELP_TEXTS.MULTI_SELECT,
-        defaultValue: DEFAULTS.SELECT,
-        options: OPTIONS.SELECT,
-        multiSelect: true,
-    },
-    {
-        type: "group",
-        label: LABELS.GROUP,
-        helpText: HELP_TEXTS.GROUP,
-        fields: [
-            {
-                type: "string",
-                name: "shortText",
-                label: LABELS.SHORT_TEXT,
-                helpText: HELP_TEXTS.SHORT_TEXT,
-            },
-            {
-                type: "paragraph",
-                name: "longText",
-                label: LABELS.LONG_TEXT,
-                helpText: HELP_TEXTS.LONG_TEXT,
-            },
-        ],
-    },
-]);
+// Settings
+export {devvitAppSettings} from "./settings.js";
 
-// Set up the menu items added by the app.
-Devvit.addMenuItem({
-    location: "post",
-    label: LABELS.GENERAL_POST_ACTION,
-    description: HELP_TEXTS.GENERAL_POST_ACTION,
-    onPress: generalMenuItemPressed,
-});
-Devvit.addMenuItem({
-    location: ["subreddit", "post", "comment"],
-    label: LABELS.LOGGED_OUT_ACTION,
-    forUserType: "loggedOut",
-    onPress: loggedOutMenuItemPressed,
-});
-Devvit.addMenuItem({
-    location: ["subreddit", "post", "comment"],
-    label: LABELS.MOD_ACTION,
-    forUserType: "moderator",
-    onPress: modMenuItemPressed,
-});
-Devvit.addMenuItem({
-    location: ["subreddit", "post", "comment"],
-    label: LABELS.MEMBER_ACTION,
-    forUserType: "member",
-    onPress: memberMenuItemPressed,
-});
+// Forms
+export {createPostForm} from "./forms/createPostForm.js";
 
-// Define scheduler jobs
-Devvit.addSchedulerJob({
-    name: "someRecurringTask",
-    onRun: someRecurringTask,
-});
+// Buttons
+export {memberButton} from "./buttons/memberButton.js";
+export {modButton} from "./buttons/modButton.js";
+export {loggedOutButton} from "./buttons/loggedOutButton.js";
+export {customPostButton} from "./buttons/customPostButton.js";
+export {generalButton} from "./buttons/generalButton.js";
 
-// AppInstall and AppUpgrade are useful for scheduling recurring actions.
-Devvit.addTrigger({
-    events: ["AppInstall", "AppUpgrade"],
-    onEvent: onAppChanged,
-});
+// Custom Post
+export {customPostExample} from "./customPost/index.js";
 
-// Register any of the other triggers that you want to use. You can register multiple triggers for the same event handler.
-// These ones are here as examples, they could technically be combined into one trigger with the onTrigger function as their handler.
-Devvit.addTrigger({
-    event: "PostSubmit",
-    onEvent: onPostSubmit,
-});
-Devvit.addTrigger({
-    event: "PostCreate",
-    onEvent: onPostCreate,
-});
-Devvit.addTrigger({
-    event: "PostUpdate",
-    onEvent: onPostUpdate,
-});
-Devvit.addTrigger({
-    event: "PostDelete",
-    onEvent: onPostDelete,
-});
-Devvit.addTrigger({
-    event: "PostReport",
-    onEvent: onPostReport,
-});
-Devvit.addTrigger({
-    event: "PostFlairUpdate",
-    onEvent: onPostFlairUpdate,
-});
-Devvit.addTrigger({
-    event: "CommentSubmit",
-    onEvent: onCommentSubmit,
-});
-Devvit.addTrigger({
-    event: "CommentCreate",
-    onEvent: onCommentCreate,
-});
-Devvit.addTrigger({
-    event: "CommentUpdate",
-    onEvent: onCommentUpdate,
-});
-Devvit.addTrigger({
-    event: "CommentDelete",
-    onEvent: onCommentDelete,
-});
-Devvit.addTrigger({
-    event: "CommentReport",
-    onEvent: onCommentReport,
-});
-Devvit.addTrigger({
-    event: "ModMail",
-    onEvent: onModMail,
-});
-Devvit.addTrigger({
-    event: "ModAction",
-    onEvent: onModAction,
-});
+// Scheduler jobs
+export {someRecurringTask} from "./scheduler/someRecurringTask.js";
+
+// Triggers
+export {appInstallTrigger} from "./triggers/appInstall.js";
+export {appUpgradeTrigger} from "./triggers/appUpgrade.js";
+export {commentCreateTrigger} from "./triggers/commentCreate.js";
+export {commentDeleteTrigger} from "./triggers/commentDelete.js";
+export {commentReportTrigger} from "./triggers/commentReport.js";
+export {commentSubmitTrigger} from "./triggers/commentSubmit.js";
+export {commentUpdateTrigger} from "./triggers/commentUpdate.js";
+export {modActionTrigger} from "./triggers/modAction.js";
+export {modMailTrigger} from "./triggers/modMail.js";
+export {postCreateTrigger} from "./triggers/postCreate.js";
+export {postDeleteTrigger} from "./triggers/postDelete.js";
+export {postFlairUpdateTrigger} from "./triggers/postFlairUpdate.js";
+export {postReportTrigger} from "./triggers/postReport.js";
+export {postSubmitTrigger} from "./triggers/postSubmit.js";
+export {postUpdateTrigger} from "./triggers/postUpdate.js";
 
 export default Devvit;

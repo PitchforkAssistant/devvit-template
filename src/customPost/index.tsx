@@ -1,8 +1,8 @@
-import {CustomPostType, Devvit} from "@devvit/public-api";
+import {Devvit} from "@devvit/public-api";
 import {CustomPostState} from "./state.js";
 import {Page} from "./pages.js";
 
-export const CustomPostExample: CustomPostType = {
+export const customPostExample = Devvit.addCustomPostType({
     name: "Custom Post Example",
     description: "An example of a custom post.",
     height: "tall",
@@ -25,4 +25,4 @@ export const CustomPostExample: CustomPostType = {
             </blocks>
         );
     },
-};
+});
