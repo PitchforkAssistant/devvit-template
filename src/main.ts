@@ -20,7 +20,6 @@ export {devvitAppSettings} from "./settings.js";
 export {createPostForm} from "./forms/createPostForm.js";
 
 // Buttons
-export {memberButton} from "./buttons/memberButton.js";
 export {modButton} from "./buttons/modButton.js";
 export {loggedOutButton} from "./buttons/loggedOutButton.js";
 export {customPostButton} from "./buttons/customPostButton.js";
