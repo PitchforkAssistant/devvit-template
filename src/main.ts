@@ -47,5 +47,9 @@ export {postFlairUpdateTrigger} from "./triggers/postFlairUpdate.js";
 export {postReportTrigger} from "./triggers/postReport.js";
 export {postSubmitTrigger} from "./triggers/postSubmit.js";
 export {postUpdateTrigger} from "./triggers/postUpdate.js";
+export {postSpoilerUpdateTrigger} from "./triggers/postSpoilerUpdate.js";
+export {postNsfwUpdateTrigger} from "./triggers/postNsfwUpdate.js";
+export {automodFilterCommentTrigger} from "./triggers/automodFilterComment.js";
+export {automodFilterPostTrigger} from "./triggers/automodFilterPost.js";
 
 export default Devvit;
